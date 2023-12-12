@@ -1,9 +1,8 @@
 import { useRef } from 'react';
-import { StyleSheet, Text, View, PanResponder, Alert } from 'react-native';
-import { Card, Icon } from 'react-native-elements';
+import { StyleSheet, Text, View, PanResponder, Alert, Modal, Button } from 'react-native';
+import { Card, Icon, Rating, Input } from 'react-native-elements';
 import { baseUrl } from '../../shared/baseUrl';
 import * as Animatable from 'react-native-animatable';
-
 
 const RenderCampsite = (props) => {
     const { campsite } = props;
@@ -11,6 +10,7 @@ const RenderCampsite = (props) => {
     const view = useRef();
 
     const isLeftSwipe = ({ dx }) => dx < -200;
+    const isRightSwipe = ({ dx }) => dx > 200;
 
     const panResponder = PanResponder.create({
         onStartShouldSetPanResponder: () => true,
@@ -40,6 +40,8 @@ const RenderCampsite = (props) => {
                     ],
                     { cancelable: false }
                 )
+            } else if (isRightSwipe(gestureState)) {
+                return props.onShowModal();
             }
         }
     })
@@ -110,6 +112,24 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: 'white',
         fontSize: 20
+    },
+    commentsTitle: {
+        textAlign: 'center',
+        backgroundColor: '#fff',
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#43484D',
+        padding: 10,
+        paddingTop: 30
+    },
+    commentItem: {
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        backgroundColor: '#fff'
+    },
+    modal: {
+        justifyContent: 'center',
+        margin: 20
     }
 });
 
